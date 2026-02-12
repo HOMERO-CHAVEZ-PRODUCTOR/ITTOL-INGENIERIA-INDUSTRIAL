@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graduación Ingeniería Industrial | ITTOL</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --olive: #556b2f;      
+            --olive-dark: #3b4a20;
+            --ivory: #fffff0;      
+            --gold: #c5a059;       
+            --dark-text: #2c2c2c;
+            --white: #ffffff;
+            --light-gold: #b5a48b;
+        }
+
+        /* --- RESET Y BASE --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body { 
+            background-color: var(--ivory); 
+            font-family: 'Inter', sans-serif; 
+            color: var(--dark-text); 
+            line-height: 1.6; 
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, .serif { font-family: 'Playfair Display', serif; }
+
+        /* --- SISTEMA DE ANIMACIONES --- */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulseEmoji {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+            100% { transform: scale(1); }
+        }
+
+        .animate-up { opacity: 0; animation: fadeInUp 1.2s ease forwards; }
+        .delay-1 { animation-delay: 0.3s; }
+        .delay-2 { animation-delay: 0.6s; }
+
+        /* --- ESTRUCTURA DE VIDEO DE FONDO --- */
+        .video-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .video-background video {
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            object-fit: cover;
+        }
+
+        /* --- SECCIÓN 1: HERO --- */
+        .hero {
+            position: relative;
+            min-height: 80vh;
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            color: var(--ivory); 
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .hero-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.45);
+            z-index: 0;
+        }
+
+        .hero-content { position: relative; z-index: 1; }
+
+        .hero h1 { 
+            font-size: clamp(2.5rem, 8vw, 4.5rem); 
+            text-shadow: 2px 2px 15px rgba(0,0,0,0.8); 
+            margin-bottom: 10px;
+        }
+        .hero p { 
+            letter-spacing: 6px; 
+            text-transform: uppercase; 
+            text-shadow: 1px 1px 10px rgba(0,0,0,0.9); 
+            font-weight: 300;
+        }
+        .gold-line { width: 120px; height: 2px; background: var(--gold); margin: 25px auto; }
+
+        /* --- SECCIÓN 2: BIENVENIDA --- */
+        .welcome-section {
+            padding: 120px 20px;
+            text-align: center;
+            background-color: var(--light-gold);
+            color: var(--white);
+            width: 100%;
+        }
+        .welcome-section h2 { 
+            font-size: clamp(2.2rem, 7vw, 3.8rem); 
+            font-style: italic; 
+            margin-bottom: 30px;
+            text-shadow: 1px 1px 4px rgba(0,0,0,0.2);
+        }
+        .welcome-section p { 
+            max-width: 850px; 
+            margin: 0 auto; 
+            font-size: 1.2rem; 
+            font-weight: 300;
+            line-height: 1.8;
+        }
+
+        /* --- SECCIÓN 3: COLUMNAS (RECUPERADAS) --- */
+        .container { max-width: 1100px; margin: 0 auto; padding: 40px 20px; }
+        
+        .event-wrapper {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 40px;
+            margin-top: -80px;
+            margin-bottom: 120px;
+        }
+
+        .toggle-input { display: none; }
+
+        .event-card {
+            background: var(--white);
+            padding: 15px;
+            box-shadow: 0 20px 45px rgba(0,0,0,0.12);
+            transition: transform 0.4s ease;
+        }
+
+        .card-inner-trigger {
+            border: 1px solid var(--gold);
+            padding: 60px 25px;
+            text-align: center;
+            cursor: pointer;
+            display: block;
+        }
+
+        .card-inner-trigger h2 { 
+            color: var(--olive); 
+            font-size: 2.4rem; 
+            letter-spacing: 1px;
+            margin-top: 15px;
+        }
+        
+        .card-inner-trigger span { 
+            font-size: 4rem; 
+            display: block; 
+            margin-bottom: 10px; 
+            animation: pulseEmoji 3.5s infinite ease-in-out;
+        }
+        
+        .card-inner-trigger small {
+            color: var(--gold);
+            letter-spacing: 3px;
+            font-weight: 600;
+            display: block;
+            margin-top: 15px;
+        }
+
+        .info-panel {
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+            background: var(--white);
+            text-align: center;
+        }
+
+        .toggle-input:checked ~ .event-card .info-panel {
+            max-height: 700px;
+            opacity: 1;
+            padding: 40px 20px 20px;
+        }
+
+        .detail-row { 
+            margin-bottom: 30px; 
+            border-bottom: 1px solid #f2f2f2; 
+            padding-bottom: 20px; 
+        }
+        .detail-row:last-child { border-bottom: none; }
+        
+        .detail-row h3 { 
+            font-size: 0.9rem; 
+            color: var(--gold); 
+            letter-spacing: 3px; 
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+        .detail-row p { 
+            font-size: 1.2rem; 
+            font-weight: 500; 
+        }
+
+        .map-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 30px;
+            border: 2px solid var(--olive);
+            color: var(--olive);
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+        .map-btn:hover {
+            background-color: var(--olive);
+            color: var(--ivory);
+            transform: translateY(-2px);
+        }
+
+        /* --- SECCIÓN 4: ITINERARIO --- */
+        .itinerary-section { padding: 40px 0 120px; }
+        .itinerary-section h2 { 
+            text-align: center; 
+            color: var(--olive); 
+            font-size: 3rem; 
+            margin-bottom: 80px; 
+        }
+
+        .timeline { position: relative; max-width: 850px; margin: 0 auto; }
+        .timeline::after { 
+            content: ''; position: absolute; width: 2px; background: var(--gold); 
+            top: 0; bottom: 0; left: 50%; margin-left: -1px; 
+        }
+
+        .timeline-item { padding: 20px 50px; position: relative; width: 50%; margin-bottom: 30px; }
+        .timeline-item::after { 
+            content: ''; position: absolute; width: 18px; height: 18px; 
+            right: -9px; top: 25px; background: var(--ivory); 
+            border: 4px solid var(--olive); border-radius: 50%; z-index: 1; 
+        }
+
+        .left { left: 0; text-align: right; }
+        .right { left: 50%; text-align: left; }
+        .right::after { left: -9px; }
+
+        .time-label { display: block; font-weight: 700; color: var(--gold); font-size: 1.1rem; margin-bottom: 5px; }
+        .event-name { font-size: 1.6rem; color: var(--olive); margin-bottom: 8px; }
+        .event-desc { font-size: 1rem; color: #555; font-weight: 300; }
+
+        /* --- SECCIÓN 5: CÓDIGO DE VESTIMENTA (RESTAURADA) --- */
+        .dress-code-section {
+            background-color: var(--olive-dark);
+            color: var(--ivory);
+            padding: 120px 20px;
+            text-align: center;
+        }
+        .dress-code-section h2 { font-size: 3.2rem; font-style: italic; margin-bottom: 15px; }
+        .dress-code-section h3 { letter-spacing: 8px; color: var(--gold); margin-bottom: 60px; font-weight: 300; }
+
+        .dress-code-grid {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            max-width: 1000px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+        }
+
+        .gender-box {
+            background: rgba(255, 255, 255, 0.04);
+            padding: 50px;
+            border: 1px solid var(--gold);
+            flex: 1;
+            min-width: 320px;
+            text-align: left;
+            transition: 0.4s;
+        }
+        .gender-box:hover { background: rgba(255, 255, 255, 0.08); transform: translateY(-5px); }
+
+        .gender-box h4 { 
+            font-size: 2rem; 
+            color: var(--gold); 
+            margin-bottom: 25px; 
+            border-bottom: 1px solid rgba(197, 160, 89, 0.3); 
+            padding-bottom: 15px; 
+        }
+
+        .dress-list { list-style: none; }
+        .dress-list li { margin-bottom: 18px; font-weight: 300; font-size: 1.1rem; display: flex; align-items: center; }
+        .dress-list li::before { content: "•"; color: var(--gold); font-size: 2rem; margin-right: 20px; }
+
+        /* --- SECCIÓN 6: HASHTAG CON VIDEO --- */
+        .hashtag-section {
+            position: relative;
+            padding: 120px 20px;
+            text-align: center;
+            color: var(--white);
+            overflow: hidden;
+            min-height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .hashtag-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 0;
+        }
+        
+        .hashtag-content { position: relative; z-index: 1; }
+        .hashtag-content p { font-size: 1.4rem; font-weight: 300; margin-bottom: 15px; letter-spacing: 2px; text-shadow: 1px 1px 8px rgba(0,0,0,0.8); }
+        .hashtag-content h2 { font-size: clamp(3rem, 10vw, 6rem); font-weight: 400; text-shadow: 2px 2px 15px rgba(0,0,0,0.9); }
+
+        /* --- CONTROL DE MÚSICA --- */
+        #music-control {
+            position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px;
+            background-color: var(--gold); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; z-index: 2000; box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+            transition: 0.3s;
+        }
+        #music-control:hover { transform: scale(1.1); background-color: var(--white); }
+        #music-icon { font-size: 1.8rem; }
+
+        /* --- RESPONSIVE ENGINE --- */
+        @media (max-width: 768px) {
+            .hero { min-height: 60vh; }
+            .timeline::after { left: 31px; }
+            .timeline-item { width: 100%; padding-left: 75px; padding-right: 25px; text-align: left; }
+            .timeline-item::after { left: 21px; }
+            .left, .right { left: 0; }
+            .event-wrapper { margin-top: 20px; }
+            .gender-box { min-width: 100%; }
+            .welcome-section { padding: 80px 20px; }
+        }
+
+        footer { 
+            text-align: center; 
+            padding: 80px 20px; 
+            background: var(--olive); 
+            color: var(--ivory); 
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="miMusica" loop>
+        <source src="cancion.mp3" type="audio/mpeg">
+    </audio>
+    <div id="music-control" onclick="toggleMusic()">
+        <span id="music-icon">🎵</span>
+    </div>
+
+    <header class="hero">
+        <div class="video-background">
+            <video autoplay muted loop playsinline>
+                <source src="back.mp4" type="video/mp4">
+            </video>
+        </div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content animate-up">
+            <p>ITTOL · 7 DE MARZO</p>
+            <h1>Ingeniería Industrial</h1>
+            <div class="gold-line"></div>
+            <h2 class="serif" style="font-style: italic; font-size: 2.5rem;">Nuestra Graduación</h2>
+        </div>
+    </header>
+
+    <section class="welcome-section">
+        <div class="animate-up delay-1">
+            <h2 class="serif">¡Celebra con nosotros!</h2>
+            <p>
+                Hoy cerramos un capítulo lleno de aprendizaje, noches largas y grandes sueños. 
+                Nos encantaría compartir contigo la alegría de esta graduación, porque gracias 
+                a personas como tú, este logro fue posible. ¡Te esperamos para brindar por el éxito 
+                de la generación de Ingeniería Industrial!
+            </p>
+        </div>
+    </section>
+
+    <main class="container">
+        <div class="event-wrapper animate-up delay-2">
+            
+            <div class="event-column">
+                <input type="checkbox" id="check-misa" class="toggle-input">
+                <div class="event-card">
+                    <label for="check-misa" class="card-inner-trigger">
+                        <span>⛪️</span>
+                        <h2 class="serif">Misa</h2>
+                        <small>MÁS INFORMACIÓN</small>
+                    </label>
+                    <div class="info-panel">
+                        <div class="detail-row">
+                            <h3>Fecha</h3>
+                            <p>7 de Marzo, 2026</p>
+                        </div>
+                        <div class="detail-row">
+                            <h3>Hora</h3>
+                            <p>10:00 AM</p>
+                        </div>
+                        <div class="detail-row">
+                            <h3>Lugar</h3>
+                            <p>Iglesia de San José (El Ranchito)</p>
+                            <a href="https://www.google.com/maps/place/Francisco+Murgu%C3%ADa,+50130+Toluca+de+Lerdo,+M%C3%A9x./@19.2826806,-99.6648688,2045m/data=!3m2!1e3!4b1!4m6!3m5!1s0x85cd89be825aa81f:0xb3905869718c6199!8m2!3d19.283307!4d-99.6584978!16s%2Fg%2F1tcyft28?entry=ttu&g_ep=EgoyMDI2MDIwNC4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="map-btn">VER MAPA</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="event-column">
+                <input type="checkbox" id="check-recepcion" class="toggle-input">
+                <div class="event-card">
+                    <label for="check-recepcion" class="card-inner-trigger">
+                        <span>🥂</span>
+                        <h2 class="serif">Recepción</h2>
+                        <small>MÁS INFORMACIÓN</small>
+                    </label>
+                    <div class="info-panel">
+                        <div class="detail-row">
+                            <h3>Fecha</h3>
+                            <p>7 de Marzo, 2026</p>
+                        </div>
+                        <div class="detail-row">
+                            <h3>Acceso</h3>
+                            <p>20:00 HRS</p>
+                        </div>
+                        <div class="detail-row">
+                            <h3>Lugar</h3>
+                            <p>Gran Velaria, Metepec</p>
+                            <a href="https://www.google.com/maps/place/Gran+Velaria/@19.1967511,-99.5752582,1023m/data=!3m2!1e3!4b1!4m6!3m5!1s0x85cd8da64620bac9:0x3e4113e06fdca79b!8m2!3d19.1967511!4d-99.5752582!16s%2Fg%2F11txm_txfz?entry=ttu&g_ep=EgoyMDI2MDIwNC4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="map-btn">VER MAPA</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <section class="itinerary-section">
+            <h2 class="serif">Itinerario</h2>
+            <div class="timeline">
+                <div class="timeline-item left">
+                    <span class="time-label">20:00 HRS</span>
+                    <h3 class="event-name">Recepción</h3>
+                    <p class="event-desc">Bienvenida y cóctel para invitados de honor.</p>
+                </div>
+                <div class="timeline-item right">
+                    <span class="time-label">21:00 HRS</span>
+                    <h3 class="event-name">Entrada Oficial</h3>
+                    <p class="event-desc">Protocolo de ingreso de la Generación 2021-2026.</p>
+                </div>
+                <div class="timeline-item left">
+                    <span class="time-label">21:30 HRS</span>
+                    <h3 class="event-name">Cena de Gala</h3>
+                    <p class="event-desc">Servicio de banquete gourmet de tres tiempos.</p>
+                </div>
+                <div class="timeline-item right">
+                    <span class="time-label">23:00 HRS</span>
+                    <h3 class="event-name">Brindis y Vals</h3>
+                    <p class="event-desc">Palabras de despedida y baile tradicional con familiares.</p>
+                </div>
+                <div class="timeline-item left">
+                    <span class="time-label">00:00 HRS</span>
+                    <h3 class="event-name">Baile</h3>
+                    <p class="event-desc">Apertura de pista con grupo versátil y DJ en vivo.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <section class="dress-code-section">
+        <h2 class="serif">Código de vestimenta</h2>
+        <h3>FORMAL</h3>
+        
+        <div class="dress-code-grid">
+            <div class="gender-box">
+                <h4>Hombres</h4>
+                <ul class="dress-list">
+                    <li>Traje formal completo</li>
+                    <li>Camisa de manga larga</li>
+                    <li>Corbata o Corbatín</li>
+                    <li>Zapato formal (No tenis)</li>
+                </ul>
+            </div>
+
+            <div class="gender-box">
+                <h4>Mujeres</h4>
+                <ul class="dress-list">
+                    <li>Vestido largo</li>
+                    <li>Bolso pequeño</li>
+                    <li>Tacones abiertos o cerrados</li>
+                    <li>Accesorios</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="hashtag-section">
+        <div class="video-background">
+            <video autoplay muted loop playsinline>
+                <source src="back.mp4" type="video/mp4">
+            </video>
+        </div>
+        <div class="hashtag-overlay"></div>
+        <div class="hashtag-content animate-up">
+            <p>Durante el evento utiliza el hashtag</p>
+            <h2 class="serif">#GradIndu26</h2>
+        </div>
+    </section>
+
+    <footer>
+        <p class="serif" style="font-size: 1.6rem; margin-bottom: 10px;">Ingeniería Industrial ITTOL</p>
+        <p style="font-size: 1rem; opacity: 0.8;">Generación 2021 — 2026</p>
+    </footer>
+
+    <script>
+        const audio = document.getElementById('miMusica');
+        const musicIcon = document.getElementById('music-icon');
+
+        function toggleMusic() {
+            if (audio.paused) {
+                audio.play();
+                musicIcon.innerHTML = "🔊";
+            } else {
+                audio.pause();
+                musicIcon.innerHTML = "🎵";
+            }
+        }
+
+        document.body.addEventListener('click', function() {
+            if (audio.paused) {
+                audio.play();
+                musicIcon.innerHTML = "🔊";
+            }
+        }, { once: true });
+    </script>
+
+</body>
+</html>
