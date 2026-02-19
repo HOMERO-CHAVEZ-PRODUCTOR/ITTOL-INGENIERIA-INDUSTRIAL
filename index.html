@@ -9,10 +9,11 @@
 
     <style>
         :root {
-            --deep-teal: #3a5a5a;   /* Verde azulado de la imagen */
+            --deep-teal: #3a5a5a;   
             --teal-dark: #2a3f3f;
-            --ivory: #f4f1ea;      /* Marfil de la imagen */
-            --gold: #c5a059;       /* Oro */
+            --ivory: #f4f1ea;      
+            --gold: #c5a059;       
+            --gold-light: rgba(197, 160, 89, 0.2);
             --dark-text: #1a1a1a;
             --white: #ffffff;
             --overlay-dark: rgba(0, 0, 0, 0.55);
@@ -27,9 +28,28 @@
             color: var(--dark-text); 
             line-height: 1.6; 
             overflow-x: hidden;
+            position: relative;
         }
 
         h1, h2, h3, h4, .serif { font-family: 'Playfair Display', serif; }
+
+        /* --- ELEMENTOS DE CONTINUIDAD (LÍNEAS ORGÁNICAS REFORZADAS) --- */
+        .decoration-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        .flow-line-svg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0.7; /* Más evidente */
+        }
 
         /* --- SISTEMA DE ANIMACIONES --- */
         @keyframes fadeInUp {
@@ -39,7 +59,7 @@
 
         @keyframes pulseEmoji {
             0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
+            50% { transform: scale(1.15); }
             100% { transform: scale(1); }
         }
 
@@ -47,25 +67,17 @@
         .delay-1 { animation-delay: 0.3s; }
         .delay-2 { animation-delay: 0.6s; }
 
-        /* --- MOTOR DE VIDEO DE FONDO (CORREGIDO) --- */
+        /* --- MOTOR DE VIDEO DE FONDO --- */
         .video-container {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            z-index: 0;
+            top: 0; left: 0; width: 100%; height: 100%;
+            overflow: hidden; z-index: 0;
         }
 
         .video-container video {
-            min-width: 100%;
-            min-height: 100%;
-            width: auto;
-            height: auto;
-            position: absolute;
-            top: 50%;
-            left: 50%;
+            min-width: 100%; min-height: 100%;
+            width: auto; height: auto;
+            position: absolute; top: 50%; left: 50%;
             transform: translate(-50%, -50%);
             object-fit: cover;
         }
@@ -131,17 +143,15 @@
             line-height: 1.9;
         }
 
-        /* --- SECCIÓN 3: COLUMNAS DE EVENTOS (ARREGLADAS) --- */
-        .container { max-width: 1150px; margin: 0 auto; padding: 60px 20px; }
+        /* --- SECCIÓN 3: COLUMNAS DE EVENTOS --- */
+        .container { max-width: 1150px; margin: 0 auto; padding: 60px 20px; position: relative; z-index: 20; }
         
         .event-wrapper {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
             gap: 45px;
-            margin-top: -100px; /* Traslape profundo */
+            margin-top: -100px;
             margin-bottom: 120px;
-            position: relative;
-            z-index: 20;
         }
 
         .toggle-input { display: none; }
@@ -275,6 +285,8 @@
             padding: 130px 20px;
             text-align: center;
             border-top: 5px solid var(--gold);
+            position: relative;
+            z-index: 10;
         }
         .dress-code-section h2 { font-size: 3.5rem; font-style: italic; margin-bottom: 15px; }
         .dress-code-section h3 { letter-spacing: 10px; color: var(--gold); margin-bottom: 70px; font-weight: 300; }
@@ -297,7 +309,6 @@
             text-align: left;
             transition: 0.4s;
         }
-        .gender-box:hover { background: rgba(255, 255, 255, 0.08); }
 
         .gender-box h4 { 
             font-size: 2.2rem; 
@@ -352,7 +363,6 @@
             .timeline-item::after { left: 20px; }
             .left, .right { left: 0; }
             .event-wrapper { margin-top: 20px; }
-            .gender-box { min-width: 100%; }
         }
 
         footer { 
@@ -365,6 +375,20 @@
 </head>
 <body>
 
+    <div class="decoration-container">
+        <svg class="flow-line-svg" viewBox="0 0 100 1200" preserveAspectRatio="none">
+            <path d="M-5,0 C20,150 40,300 10,450 C-10,600 30,750 50,900 C70,1050 30,1150 50,1200" 
+                  stroke="var(--gold)" fill="none" stroke-width="0.8" />
+            <path d="M105,0 C85,200 65,400 85,600 C105,800 75,1000 95,1200" 
+                  stroke="var(--gold)" fill="none" stroke-width="0.2" />
+            <path d="M20,0 C50,200 10,500 80,800 C120,1000 50,1150 10,1200" 
+                  stroke="var(--gold-light)" fill="none" stroke-width="0.4" />
+            
+            <circle cx="15" cy="350" r="12" fill="none" stroke="var(--gold)" stroke-width="0.1" />
+            <circle cx="85" cy="780" r="18" fill="none" stroke="var(--gold-light)" stroke-width="0.1" />
+        </svg>
+    </div>
+
     <audio id="miMusica" loop>
         <source src="cancion fondo.mp3" type="audio/mpeg">
     </audio>
@@ -374,7 +398,7 @@
 
     <header class="hero">
         <div class="video-container">
-            <video autoplay muted loop playsinline id="heroVideo">
+            <video autoplay muted loop playsinline>
                 <source src="back.mp4" type="video/mp4">
             </video>
         </div>
@@ -383,7 +407,7 @@
             <p>ITTOL · 7 DE MARZO</p>
             <h1>Ingeniería Industrial</h1>
             <div class="gold-line"></div>
-            <h2 class="serif" style="font-style: italic; font-size: 2.8rem;">Nuestra Graduación</h2>
+            <h2 class="serif" style="font-style: italic; font-size: 2.8rem;">Generación 2026</h2>
         </div>
     </header>
 
@@ -391,10 +415,9 @@
         <div class="animate-up delay-1">
             <h2 class="serif">¡Celebra con nosotros!</h2>
             <p>
-                Hoy cerramos un capítulo lleno de aprendizaje, noches largas y grandes sueños. 
-                Nos encantaría compartir contigo la alegría de esta graduación, porque gracias 
-                a personas como tú, este logro fue posible. ¡Te esperamos para brindar por el éxito 
-                de la generación de Ingeniería Industrial!
+                Hay caminos que comienzan con un sueño y terminan en una meta compartida.
+                Hoy celebramos el esfuerzo, la constancia y cada paso que nos trajo hasta aquí.
+                Queremos que formes parte de este momento tan especial y brindes con nosotros por el futuro que comienza.
             </p>
         </div>
     </section>
@@ -411,19 +434,9 @@
                         <small>MÁS INFORMACIÓN</small>
                     </label>
                     <div class="info-panel">
-                        <div class="detail-row">
-                            <h3>Fecha</h3>
-                            <p>7 de Marzo, 2026</p>
-                        </div>
-                        <div class="detail-row">
-                            <h3>Hora</h3>
-                            <p>10:00 AM</p>
-                        </div>
-                        <div class="detail-row">
-                            <h3>Lugar</h3>
-                            <p>Iglesia de San José (El Ranchito)</p>
-                            <a href="https://www.google.com/maps/place/Francisco+Murgu%C3%ADa,+50130+Toluca+de+Lerdo,+M%C3%A9x./@19.2826806,-99.6648688,2045m/data=!3m2!1e3!4b1!4m6!3m5!1s0x85cd89be825aa81f:0xb3905869718c6199!8m2!3d19.283307!4d-99.6584978!16s%2Fg%2F1tcyft28?entry=ttu&g_ep=EgoyMDI2MDIwNC4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="map-btn">VER MAPA</a>
-                        </div>
+                        <div class="detail-row"><h3>Fecha</h3><p>7 de Marzo, 2026</p></div>
+                        <div class="detail-row"><h3>Hora</h3><p>10:00 AM</p></div>
+                        <div class="detail-row"><h3>Lugar</h3><p>Iglesia de San José (El Ranchito)</p><a href="https://www.google.com/maps/place/Francisco+Murgu%C3%ADa,+50130+Toluca+de+Lerdo,+M%C3%A9x./@19.2826806,-99.6648688,2045m/data=!3m2!1e3!4b1!4m6!3m5!1s0x85cd89be825aa81f:0xb3905869718c6199!8m2!3d19.283307!4d-99.6584978!16s%2Fg%2F1tcyft28?entry=ttu&g_ep=EgoyMDI2MDIwNC4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="map-btn">VER MAPA</a></div>
                     </div>
                 </div>
             </div>
@@ -437,19 +450,9 @@
                         <small>MÁS INFORMACIÓN</small>
                     </label>
                     <div class="info-panel">
-                        <div class="detail-row">
-                            <h3>Fecha</h3>
-                            <p>7 de Marzo, 2026</p>
-                        </div>
-                        <div class="detail-row">
-                            <h3>Acceso</h3>
-                            <p>20:00 HRS</p>
-                        </div>
-                        <div class="detail-row">
-                            <h3>Lugar</h3>
-                            <p>Gran Velaria, Metepec</p>
-                            <a href="https://www.google.com/maps/place/Gran+Velaria/@19.1967511,-99.5752582,1023m/data=!3m2!1e3!4b1!4m6!3m5!1s0x85cd8da64620bac9:0x3e4113e06fdca79b!8m2!3d19.1967511!4d-99.5752582!16s%2Fg%2F11txm_txfz?entry=ttu&g_ep=EgoyMDI2MDIwNC4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="map-btn">VER MAPA</a>
-                        </div>
+                        <div class="detail-row"><h3>Fecha</h3><p>7 de Marzo, 2026</p></div>
+                        <div class="detail-row"><h3>Acceso</h3><p>20:00 HRS</p></div>
+                        <div class="detail-row"><h3>Lugar</h3><p>Gran Velaria, Metepec</p><a href="https://www.google.com/maps/place/Gran+Velaria/@19.1967511,-99.5752582,1023m/data=!3m2!1e3!4b1!4m6!3m5!1s0x85cd8da64620bac9:0x3e4113e06fdca79b!8m2!3d19.1967511!4d-99.5752582!16s%2Fg%2F11txm_txfz?entry=ttu&g_ep=EgoyMDI2MDIwNC4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="map-btn">VER MAPA</a></div>
                     </div>
                 </div>
             </div>
@@ -460,29 +463,39 @@
             <h2 class="serif">Itinerario</h2>
             <div class="timeline">
                 <div class="timeline-item left">
-                    <span class="time-label">20:00 HRS</span>
+                    <span class="time-label">06:00 PM</span>
                     <h3 class="event-name">Recepción</h3>
-                    <p class="event-desc">Bienvenida y cóctel gourmet para invitados de honor.</p>
+                    <p class="event-desc">Bienvenida de invitados y cóctel de inicio.</p>
                 </div>
                 <div class="timeline-item right">
-                    <span class="time-label">21:00 HRS</span>
-                    <h3 class="event-name">Entrada Oficial</h3>
-                    <p class="event-desc">Protocolo de ingreso solemne Generación 2021-2026.</p>
+                    <span class="time-label">07:00 PM</span>
+                    <h3 class="event-name">Cena</h3>
+                    <p class="event-desc">Servicio de banquete gourmet Generación 2021-2026.</p>
                 </div>
                 <div class="timeline-item left">
-                    <span class="time-label">21:30 HRS</span>
-                    <h3 class="event-name">Cena de Gala</h3>
-                    <p class="event-desc">Servicio de banquete internacional de tres tiempos.</p>
+                    <span class="time-label">08:05 PM</span>
+                    <h3 class="event-name">Brindis</h3>
+                    <p class="event-desc">Protocolo solemne y palabras de honor.</p>
                 </div>
                 <div class="timeline-item right">
-                    <span class="time-label">23:00 HRS</span>
-                    <h3 class="event-name">Brindis y Vals</h3>
-                    <p class="event-desc">Palabras de despedida y baile tradicional con familiares.</p>
+                    <span class="time-label">08:10 PM</span>
+                    <h3 class="event-name">Se abre pista</h3>
+                    <p class="event-desc">Apertura oficial del baile de graduación.</p>
                 </div>
                 <div class="timeline-item left">
-                    <span class="time-label">00:00 HRS</span>
-                    <h3 class="event-name">Baile</h3>
-                    <p class="event-desc">Apertura de pista con grupo versátil y DJ en vivo.</p>
+                    <span class="time-label">12:00 AM</span>
+                    <h3 class="event-name">After</h3>
+                    <p class="event-desc">Continuación de la celebración (12:00 AM – 02:00 AM).</p>
+                </div>
+                <div class="timeline-item right">
+                    <span class="time-label">02:00 AM</span>
+                    <h3 class="event-name">Fin</h3>
+                    <p class="event-desc">Cierre oficial del evento.</p>
+                </div>
+                <div class="timeline-item left">
+                    <span class="time-label">02:00 AM</span>
+                    <h3 class="event-name">Desalojo</h3>
+                    <p class="event-desc">Salida de invitados (02:00 AM – 03:00 AM).</p>
                 </div>
             </div>
         </section>
@@ -547,7 +560,6 @@
             }
         }
 
-        // Intento de reproducción al interactuar
         document.body.addEventListener('click', function() {
             if (audio.paused) {
                 audio.play();
