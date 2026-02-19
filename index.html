@@ -9,13 +9,13 @@
 
     <style>
         :root {
-            --olive: #556b2f;      
-            --olive-dark: #3b4a20;
-            --ivory: #fffff0;      
-            --gold: #c5a059;       
-            --dark-text: #2c2c2c;
+            --deep-teal: #3a5a5a;   /* Verde azulado de la imagen */
+            --teal-dark: #2a3f3f;
+            --ivory: #f4f1ea;      /* Marfil de la imagen */
+            --gold: #c5a059;       /* Oro */
+            --dark-text: #1a1a1a;
             --white: #ffffff;
-            --light-gold: #b5a48b;
+            --overlay-dark: rgba(0, 0, 0, 0.55);
         }
 
         /* --- RESET Y BASE --- */
@@ -39,7 +39,7 @@
 
         @keyframes pulseEmoji {
             0% { transform: scale(1); }
-            50% { transform: scale(1.15); }
+            50% { transform: scale(1.1); }
             100% { transform: scale(1); }
         }
 
@@ -47,18 +47,18 @@
         .delay-1 { animation-delay: 0.3s; }
         .delay-2 { animation-delay: 0.6s; }
 
-        /* --- ESTRUCTURA DE VIDEO DE FONDO --- */
-        .video-background {
+        /* --- MOTOR DE VIDEO DE FONDO (CORREGIDO) --- */
+        .video-container {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             overflow: hidden;
-            z-index: -1;
+            z-index: 0;
         }
 
-        .video-background video {
+        .video-container video {
             min-width: 100%;
             min-height: 100%;
             width: auto;
@@ -73,68 +73,75 @@
         /* --- SECCIÓN 1: HERO --- */
         .hero {
             position: relative;
-            min-height: 80vh;
+            min-height: 85vh;
             display: flex; 
             align-items: center; 
             justify-content: center; 
-            color: var(--ivory); 
+            color: var(--white); 
             text-align: center;
             padding: 20px;
+            overflow: hidden;
         }
         
         .hero-overlay {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.45);
-            z-index: 0;
+            background: var(--overlay-dark);
+            z-index: 1;
         }
 
-        .hero-content { position: relative; z-index: 1; }
+        .hero-content { position: relative; z-index: 2; }
 
         .hero h1 { 
             font-size: clamp(2.5rem, 8vw, 4.5rem); 
-            text-shadow: 2px 2px 15px rgba(0,0,0,0.8); 
-            margin-bottom: 10px;
+            text-shadow: 2px 2px 20px rgba(0,0,0,0.8); 
+            margin-bottom: 15px;
         }
         .hero p { 
-            letter-spacing: 6px; 
+            letter-spacing: 7px; 
             text-transform: uppercase; 
-            text-shadow: 1px 1px 10px rgba(0,0,0,0.9); 
+            text-shadow: 1px 1px 12px rgba(0,0,0,0.9); 
             font-weight: 300;
         }
-        .gold-line { width: 120px; height: 2px; background: var(--gold); margin: 25px auto; }
+        .gold-line { width: 140px; height: 3px; background: var(--gold); margin: 30px auto; }
 
         /* --- SECCIÓN 2: BIENVENIDA --- */
         .welcome-section {
             padding: 120px 20px;
             text-align: center;
-            background-color: var(--light-gold);
+            background-color: var(--deep-teal);
             color: var(--white);
             width: 100%;
+            border-top: 5px solid var(--gold);
+            border-bottom: 5px solid var(--gold);
+            position: relative;
+            z-index: 10;
         }
         .welcome-section h2 { 
             font-size: clamp(2.2rem, 7vw, 3.8rem); 
             font-style: italic; 
-            margin-bottom: 30px;
-            text-shadow: 1px 1px 4px rgba(0,0,0,0.2);
+            margin-bottom: 35px;
+            font-weight: 400;
         }
         .welcome-section p { 
-            max-width: 850px; 
+            max-width: 900px; 
             margin: 0 auto; 
-            font-size: 1.2rem; 
+            font-size: 1.25rem; 
             font-weight: 300;
-            line-height: 1.8;
+            line-height: 1.9;
         }
 
-        /* --- SECCIÓN 3: COLUMNAS (RECUPERADAS) --- */
-        .container { max-width: 1100px; margin: 0 auto; padding: 40px 20px; }
+        /* --- SECCIÓN 3: COLUMNAS DE EVENTOS (ARREGLADAS) --- */
+        .container { max-width: 1150px; margin: 0 auto; padding: 60px 20px; }
         
         .event-wrapper {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-            gap: 40px;
-            margin-top: -80px;
+            grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+            gap: 45px;
+            margin-top: -100px; /* Traslape profundo */
             margin-bottom: 120px;
+            position: relative;
+            z-index: 20;
         }
 
         .toggle-input { display: none; }
@@ -142,27 +149,28 @@
         .event-card {
             background: var(--white);
             padding: 15px;
-            box-shadow: 0 20px 45px rgba(0,0,0,0.12);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
             transition: transform 0.4s ease;
         }
 
         .card-inner-trigger {
-            border: 1px solid var(--gold);
-            padding: 60px 25px;
+            border: 2px solid var(--gold);
+            padding: 65px 30px;
             text-align: center;
             cursor: pointer;
             display: block;
+            background-color: var(--white);
         }
 
         .card-inner-trigger h2 { 
-            color: var(--olive); 
-            font-size: 2.4rem; 
+            color: var(--deep-teal); 
+            font-size: 2.6rem; 
             letter-spacing: 1px;
             margin-top: 15px;
         }
         
         .card-inner-trigger span { 
-            font-size: 4rem; 
+            font-size: 4.5rem; 
             display: block; 
             margin-bottom: 10px; 
             animation: pulseEmoji 3.5s infinite ease-in-out;
@@ -170,144 +178,147 @@
         
         .card-inner-trigger small {
             color: var(--gold);
-            letter-spacing: 3px;
+            letter-spacing: 4px;
             font-weight: 600;
             display: block;
-            margin-top: 15px;
+            margin-top: 20px;
+            text-transform: uppercase;
         }
 
         .info-panel {
             max-height: 0;
             overflow: hidden;
             opacity: 0;
-            transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
             background: var(--white);
             text-align: center;
         }
 
         .toggle-input:checked ~ .event-card .info-panel {
-            max-height: 700px;
+            max-height: 800px;
             opacity: 1;
-            padding: 40px 20px 20px;
+            padding: 45px 25px 25px;
         }
 
         .detail-row { 
-            margin-bottom: 30px; 
-            border-bottom: 1px solid #f2f2f2; 
-            padding-bottom: 20px; 
+            margin-bottom: 35px; 
+            border-bottom: 1px solid #eeeeee; 
+            padding-bottom: 25px; 
         }
         .detail-row:last-child { border-bottom: none; }
         
         .detail-row h3 { 
-            font-size: 0.9rem; 
+            font-size: 0.95rem; 
             color: var(--gold); 
-            letter-spacing: 3px; 
+            letter-spacing: 4px; 
             text-transform: uppercase;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
         }
         .detail-row p { 
-            font-size: 1.2rem; 
+            font-size: 1.3rem; 
             font-weight: 500; 
+            color: var(--dark-text);
         }
 
         .map-btn {
             display: inline-block;
-            margin-top: 20px;
-            padding: 12px 30px;
-            border: 2px solid var(--olive);
-            color: var(--olive);
+            margin-top: 25px;
+            padding: 14px 35px;
+            border: 2px solid var(--deep-teal);
+            color: var(--deep-teal);
             text-decoration: none;
-            border-radius: 30px;
+            border-radius: 35px;
             font-weight: 700;
-            font-size: 0.9rem;
-            transition: all 0.3s;
+            font-size: 0.95rem;
+            transition: all 0.4s ease;
         }
         .map-btn:hover {
-            background-color: var(--olive);
-            color: var(--ivory);
-            transform: translateY(-2px);
+            background-color: var(--deep-teal);
+            color: var(--white);
+            transform: translateY(-3px);
         }
 
         /* --- SECCIÓN 4: ITINERARIO --- */
-        .itinerary-section { padding: 40px 0 120px; }
+        .itinerary-section { padding-bottom: 120px; }
         .itinerary-section h2 { 
             text-align: center; 
-            color: var(--olive); 
-            font-size: 3rem; 
+            color: var(--deep-teal); 
+            font-size: 3.2rem; 
             margin-bottom: 80px; 
         }
 
-        .timeline { position: relative; max-width: 850px; margin: 0 auto; }
+        .timeline { position: relative; max-width: 900px; margin: 0 auto; }
         .timeline::after { 
-            content: ''; position: absolute; width: 2px; background: var(--gold); 
-            top: 0; bottom: 0; left: 50%; margin-left: -1px; 
+            content: ''; position: absolute; width: 3px; background: var(--gold); 
+            top: 0; bottom: 0; left: 50%; margin-left: -1.5px; 
         }
 
-        .timeline-item { padding: 20px 50px; position: relative; width: 50%; margin-bottom: 30px; }
+        .timeline-item { padding: 25px 55px; position: relative; width: 50%; margin-bottom: 35px; }
         .timeline-item::after { 
-            content: ''; position: absolute; width: 18px; height: 18px; 
-            right: -9px; top: 25px; background: var(--ivory); 
-            border: 4px solid var(--olive); border-radius: 50%; z-index: 1; 
+            content: ''; position: absolute; width: 22px; height: 22px; 
+            right: -11px; top: 30px; background: var(--ivory); 
+            border: 5px solid var(--deep-teal); border-radius: 50%; z-index: 1; 
         }
 
         .left { left: 0; text-align: right; }
         .right { left: 50%; text-align: left; }
-        .right::after { left: -9px; }
+        .right::after { left: -11px; }
 
-        .time-label { display: block; font-weight: 700; color: var(--gold); font-size: 1.1rem; margin-bottom: 5px; }
-        .event-name { font-size: 1.6rem; color: var(--olive); margin-bottom: 8px; }
-        .event-desc { font-size: 1rem; color: #555; font-weight: 300; }
+        .time-label { display: block; font-weight: 700; color: var(--gold); font-size: 1.2rem; margin-bottom: 8px; }
+        .event-name { font-size: 1.7rem; color: var(--deep-teal); margin-bottom: 10px; font-weight: 700; }
+        .event-desc { font-size: 1.05rem; color: #555555; font-weight: 300; }
 
-        /* --- SECCIÓN 5: CÓDIGO DE VESTIMENTA (RESTAURADA) --- */
+        /* --- SECCIÓN 5: CÓDIGO DE VESTIMENTA --- */
         .dress-code-section {
-            background-color: var(--olive-dark);
-            color: var(--ivory);
-            padding: 120px 20px;
+            background-color: var(--teal-dark);
+            color: var(--white);
+            padding: 130px 20px;
             text-align: center;
+            border-top: 5px solid var(--gold);
         }
-        .dress-code-section h2 { font-size: 3.2rem; font-style: italic; margin-bottom: 15px; }
-        .dress-code-section h3 { letter-spacing: 8px; color: var(--gold); margin-bottom: 60px; font-weight: 300; }
+        .dress-code-section h2 { font-size: 3.5rem; font-style: italic; margin-bottom: 15px; }
+        .dress-code-section h3 { letter-spacing: 10px; color: var(--gold); margin-bottom: 70px; font-weight: 300; }
 
         .dress-code-grid {
             display: flex;
             justify-content: center;
-            gap: 50px;
-            max-width: 1000px;
+            gap: 60px;
+            max-width: 1050px;
             margin: 0 auto;
             flex-wrap: wrap;
         }
 
         .gender-box {
             background: rgba(255, 255, 255, 0.04);
-            padding: 50px;
+            padding: 60px;
             border: 1px solid var(--gold);
             flex: 1;
-            min-width: 320px;
+            min-width: 340px;
             text-align: left;
             transition: 0.4s;
         }
-        .gender-box:hover { background: rgba(255, 255, 255, 0.08); transform: translateY(-5px); }
+        .gender-box:hover { background: rgba(255, 255, 255, 0.08); }
 
         .gender-box h4 { 
-            font-size: 2rem; 
+            font-size: 2.2rem; 
             color: var(--gold); 
-            margin-bottom: 25px; 
+            margin-bottom: 30px; 
             border-bottom: 1px solid rgba(197, 160, 89, 0.3); 
-            padding-bottom: 15px; 
+            padding-bottom: 20px; 
         }
 
         .dress-list { list-style: none; }
-        .dress-list li { margin-bottom: 18px; font-weight: 300; font-size: 1.1rem; display: flex; align-items: center; }
-        .dress-list li::before { content: "•"; color: var(--gold); font-size: 2rem; margin-right: 20px; }
+        .dress-list li { margin-bottom: 20px; font-weight: 300; font-size: 1.15rem; display: flex; align-items: center; }
+        .dress-list li::before { content: "•"; color: var(--gold); font-size: 2.2rem; margin-right: 25px; }
 
-        /* --- SECCIÓN 6: HASHTAG CON VIDEO --- */
+        /* --- SECCIÓN 6: HASHTAG --- */
         .hashtag-section {
             position: relative;
-            padding: 120px 20px;
+            padding: 140px 20px;
             text-align: center;
             color: var(--white);
             overflow: hidden;
-            min-height: 400px;
+            min-height: 450px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -316,41 +327,38 @@
         .hashtag-overlay {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 0;
+            background: rgba(0, 0, 0, 0.65);
+            z-index: 1;
         }
         
-        .hashtag-content { position: relative; z-index: 1; }
-        .hashtag-content p { font-size: 1.4rem; font-weight: 300; margin-bottom: 15px; letter-spacing: 2px; text-shadow: 1px 1px 8px rgba(0,0,0,0.8); }
-        .hashtag-content h2 { font-size: clamp(3rem, 10vw, 6rem); font-weight: 400; text-shadow: 2px 2px 15px rgba(0,0,0,0.9); }
+        .hashtag-content { position: relative; z-index: 2; }
+        .hashtag-content p { font-size: 1.5rem; font-weight: 300; margin-bottom: 15px; letter-spacing: 3px; }
+        .hashtag-content h2 { font-size: clamp(3rem, 10vw, 6.5rem); font-weight: 400; text-shadow: 2px 2px 20px rgba(0,0,0,1); }
 
         /* --- CONTROL DE MÚSICA --- */
         #music-control {
-            position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px;
+            position: fixed; bottom: 35px; right: 35px; width: 65px; height: 65px;
             background-color: var(--gold); border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
-            cursor: pointer; z-index: 2000; box-shadow: 0 6px 20px rgba(0,0,0,0.4);
-            transition: 0.3s;
+            cursor: pointer; z-index: 2000; box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+            transition: 0.4s;
         }
-        #music-control:hover { transform: scale(1.1); background-color: var(--white); }
-        #music-icon { font-size: 1.8rem; }
+        #music-icon { font-size: 2rem; }
 
         /* --- RESPONSIVE ENGINE --- */
         @media (max-width: 768px) {
-            .hero { min-height: 60vh; }
             .timeline::after { left: 31px; }
-            .timeline-item { width: 100%; padding-left: 75px; padding-right: 25px; text-align: left; }
-            .timeline-item::after { left: 21px; }
+            .timeline-item { width: 100%; padding-left: 80px; padding-right: 30px; text-align: left; }
+            .timeline-item::after { left: 20px; }
             .left, .right { left: 0; }
             .event-wrapper { margin-top: 20px; }
             .gender-box { min-width: 100%; }
-            .welcome-section { padding: 80px 20px; }
         }
 
         footer { 
             text-align: center; 
-            padding: 80px 20px; 
-            background: var(--olive); 
+            padding: 100px 20px; 
+            background: var(--deep-teal); 
             color: var(--ivory); 
         }
     </style>
@@ -358,15 +366,15 @@
 <body>
 
     <audio id="miMusica" loop>
-        <source src="cancion.mp3" type="audio/mpeg">
+        <source src="cancion fondo.mp3" type="audio/mpeg">
     </audio>
     <div id="music-control" onclick="toggleMusic()">
         <span id="music-icon">🎵</span>
     </div>
 
     <header class="hero">
-        <div class="video-background">
-            <video autoplay muted loop playsinline>
+        <div class="video-container">
+            <video autoplay muted loop playsinline id="heroVideo">
                 <source src="back.mp4" type="video/mp4">
             </video>
         </div>
@@ -375,7 +383,7 @@
             <p>ITTOL · 7 DE MARZO</p>
             <h1>Ingeniería Industrial</h1>
             <div class="gold-line"></div>
-            <h2 class="serif" style="font-style: italic; font-size: 2.5rem;">Nuestra Graduación</h2>
+            <h2 class="serif" style="font-style: italic; font-size: 2.8rem;">Nuestra Graduación</h2>
         </div>
     </header>
 
@@ -454,17 +462,17 @@
                 <div class="timeline-item left">
                     <span class="time-label">20:00 HRS</span>
                     <h3 class="event-name">Recepción</h3>
-                    <p class="event-desc">Bienvenida y cóctel para invitados de honor.</p>
+                    <p class="event-desc">Bienvenida y cóctel gourmet para invitados de honor.</p>
                 </div>
                 <div class="timeline-item right">
                     <span class="time-label">21:00 HRS</span>
                     <h3 class="event-name">Entrada Oficial</h3>
-                    <p class="event-desc">Protocolo de ingreso de la Generación 2021-2026.</p>
+                    <p class="event-desc">Protocolo de ingreso solemne Generación 2021-2026.</p>
                 </div>
                 <div class="timeline-item left">
                     <span class="time-label">21:30 HRS</span>
                     <h3 class="event-name">Cena de Gala</h3>
-                    <p class="event-desc">Servicio de banquete gourmet de tres tiempos.</p>
+                    <p class="event-desc">Servicio de banquete internacional de tres tiempos.</p>
                 </div>
                 <div class="timeline-item right">
                     <span class="time-label">23:00 HRS</span>
@@ -508,7 +516,7 @@
     </section>
 
     <section class="hashtag-section">
-        <div class="video-background">
+        <div class="video-container">
             <video autoplay muted loop playsinline>
                 <source src="back.mp4" type="video/mp4">
             </video>
@@ -521,8 +529,8 @@
     </section>
 
     <footer>
-        <p class="serif" style="font-size: 1.6rem; margin-bottom: 10px;">Ingeniería Industrial ITTOL</p>
-        <p style="font-size: 1rem; opacity: 0.8;">Generación 2021 — 2026</p>
+        <p class="serif" style="font-size: 1.8rem; margin-bottom: 12px;">Ingeniería Industrial ITTOL</p>
+        <p style="font-size: 1.1rem; opacity: 0.85;">Generación 2021 — 2026</p>
     </footer>
 
     <script>
@@ -539,6 +547,7 @@
             }
         }
 
+        // Intento de reproducción al interactuar
         document.body.addEventListener('click', function() {
             if (audio.paused) {
                 audio.play();
