@@ -48,7 +48,7 @@
             position: absolute;
             width: 100%;
             height: 100%;
-            opacity: 0.7; /* Más evidente */
+            opacity: 0.5;
         }
 
         /* --- SISTEMA DE ANIMACIONES --- */
@@ -230,6 +230,7 @@
             color: var(--dark-text);
         }
 
+        /* BOTÓN DE MAPA RESTAURADO */
         .map-btn {
             display: inline-block;
             margin-top: 25px;
@@ -354,9 +355,8 @@
             cursor: pointer; z-index: 2000; box-shadow: 0 8px 25px rgba(0,0,0,0.5);
             transition: 0.4s;
         }
-        #music-icon { font-size: 2rem; }
 
-        /* --- RESPONSIVE ENGINE --- */
+        /* --- RESPONSIVE --- */
         @media (max-width: 768px) {
             .timeline::after { left: 31px; }
             .timeline-item { width: 100%; padding-left: 80px; padding-right: 30px; text-align: left; }
@@ -376,16 +376,13 @@
 <body>
 
     <div class="decoration-container">
-        <svg class="flow-line-svg" viewBox="0 0 100 1200" preserveAspectRatio="none">
-            <path d="M-5,0 C20,150 40,300 10,450 C-10,600 30,750 50,900 C70,1050 30,1150 50,1200" 
+        <svg class="flow-line-svg" viewBox="0 0 100 1500" preserveAspectRatio="none">
+            <path d="M-5,0 C25,200 45,450 15,650 C-15,850 35,1100 55,1300 C65,1450 40,1480 50,1500" 
                   stroke="var(--gold)" fill="none" stroke-width="0.8" />
-            <path d="M105,0 C85,200 65,400 85,600 C105,800 75,1000 95,1200" 
-                  stroke="var(--gold)" fill="none" stroke-width="0.2" />
-            <path d="M20,0 C50,200 10,500 80,800 C120,1000 50,1150 10,1200" 
-                  stroke="var(--gold-light)" fill="none" stroke-width="0.4" />
-            
-            <circle cx="15" cy="350" r="12" fill="none" stroke="var(--gold)" stroke-width="0.1" />
-            <circle cx="85" cy="780" r="18" fill="none" stroke="var(--gold-light)" stroke-width="0.1" />
+            <path d="M105,0 C80,300 60,600 80,900 C100,1200 70,1400 95,1500" 
+                  stroke="var(--gold)" fill="none" stroke-width="0.3" />
+            <circle cx="10" cy="400" r="15" fill="none" stroke="var(--gold-light)" stroke-width="0.2" />
+            <circle cx="90" cy="1100" r="25" fill="none" stroke="var(--gold-light)" stroke-width="0.2" />
         </svg>
     </div>
 
@@ -436,7 +433,11 @@
                     <div class="info-panel">
                         <div class="detail-row"><h3>Fecha</h3><p>7 de Marzo, 2026</p></div>
                         <div class="detail-row"><h3>Hora</h3><p>17:00 HRS</p></div>
-                        <div class="detail-row"><h3>Lugar</h3><p>Iglesia de San José (El Ranchito)</p><a href="https://www.google.com/maps/place/Iglesia+de+San+José+(El+Ranchito)/@19.2815221,-99.6585158,211m/data=!3m1!1e3!4m15!1m8!3m7!1s0x85cd89be825aa81f:0xb3905869718c6199!2sFrancisco+Murguía,+50130+Toluca+de+Lerdo,+Méx.!3b1!8m2!3d19.283307!4d-99.6584978!16s%2Fg%2F1tcyft28!3m5!1s0x85cd89bdc5b6cc25:0x69b842306be8514d!8m2!3d19.2814655!4d-99.6580353!16s%2Fg%2F1trxf0nh?entry=ttu&g_ep=EgoyMDI2MDIyMy4wIKXMDSoASAFQAw%3D%3D">VER MAPA</a></div>
+                        <div class="detail-row">
+                            <h3>Lugar</h3>
+                            <p>Iglesia de San José (El Ranchito)</p>
+                            <a href="https://maps.app.goo.gl/BfR1Gf4N7L4f8S9P6" target="_blank" class="map-btn">VER MAPA</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -452,7 +453,11 @@
                     <div class="info-panel">
                         <div class="detail-row"><h3>Fecha</h3><p>7 de Marzo, 2026</p></div>
                         <div class="detail-row"><h3>Acceso</h3><p>18:30 HRS</p></div>
-                        <div class="detail-row"><h3>Lugar</h3><p>Gran Velaria, Metepec</p><a href="https://www.google.com/maps/place/Gran+Velaria/@19.1967511,-99.5752582,1023m/data=!3m2!1e3!4b1!4m6!3m5!1s0x85cd8da64620bac9:0x3e4113e06fdca79b!8m2!3d19.1967511!4d-99.5752582!16s%2Fg%2F11txm_txfz?entry=ttu&g_ep=EgoyMDI2MDIwNC4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="map-btn">VER MAPA</a></div>
+                        <div class="detail-row">
+                            <h3>Lugar</h3>
+                            <p>Gran Velaria, Metepec</p>
+                            <a href="https://googleusercontent.com/maps.google.com/1" target="_blank" class="map-btn">VER MAPA</a>
+                        </div>
                     </div>
                 </div>
             </div>
